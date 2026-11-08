@@ -1,2 +1,2 @@
-# Evaluaci-n-1-3er-corte---Desarrollo-del-Software
+# Evaluacion-1/3er-corte/---Desarrollo-del-Software
 Este repositorio sirve para ver la evolución de la PLATAFORMA DIGITAL PARA LA GESTIÓN TÉCNICA Y AUDITORÍA DE CONECTIVIDAD EN CAJAS DE ACCESO TERMINAL (NAP) BAJO ESTÁNDARES DE REDES FTTH-GPON EN EL MUNICIPIO PLAZA, ESTADO MIRANDA.
