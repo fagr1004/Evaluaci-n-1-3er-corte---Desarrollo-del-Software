@@ -1,0 +1,22 @@
+# Entornos virtuales y dependencias de Python
+venv/
+env/
+ENV/
+__pycache__/
+*.py
+*.pyc
+*.pyo
+*.pyd
+
+# Configuración de editores (VS Code)
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Bases de datos locales de desarrollo (SQLite u otros archivos temporales)
+*.sqlite3
+*.db
+.env
