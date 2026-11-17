@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTTH-GPON Plaza | Gestión de Cajas NAP</title>
+    <!-- Aquí enlazaremos tu CSS oscuro más adelante -->
+</head>
+<body class="dark-theme">
+
+    <div class="dashboard-container">
+
+        <!-- 1. BARRA LATERAL DE ÍCONOS -->
+        <aside class="sidebar-iconos">
+            <div class="logo-box">
+                <span class="logo-text">NP</span>
+            </div>
+            <nav class="icon-nav">
+                <a href="#dashboard" class="icon-btn active" title="Dashboard">📊</a>
+                <a href="#naps" class="icon-btn" title="Cajas NAP">📦</a>
+                <a href="#auditoria" class="icon-btn" title="Auditoría">🔍</a>
+                <a href="#config" class="icon-btn" title="Ajustes">⚙️</a>
+            </nav>
+            <div class="sidebar-bottom">
+                <button class="btn-add" title="Nueva Caja NAP">+</button>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-area">
+            
+            <!-- HEADER SUPERIOR -->
+            <header class="top-nav">
+                <div class="search-section">
+                    <h1>GESTIÓN NAP - MUNICIPIO PLAZA</h1>
+                </div>
+                <div class="user-profile">
+                    <span class="badge-status">Conectado (GPON)</span>
+                    <div class="avatar-info">
+                        <span class="user-name">Técnico Auditor</span>
+                        <span class="user-handle">@PlazaAdmin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- GRILLA DE CONTENIDO (Estilo Tarjetas) -->
+            <div class="content-grid">
+
+                <!-- TARJETA 1: MÉTRICAS DE PUERTOS -->
+                <div class="card-box">
+                    <div class="card-header">
+                        <h3>ESTADO DE PUERTOS</h3>
+                        <span class="dots">...</span>
+                    </div>
+                    <div class="metrics-flex">
+                        <div class="metric-item">
+                            <span class="rate success">▲ 92%</span>
+                            <span class="metric-label">Óptimos</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="rate warning">▼ 8%</span>
+                            <span class="metric-label">Atenuados</span>
+                        </div>
+                    </div>
+                    <div class="mini-chart-line">
+                        <!-- Línea simulada de comportamiento de potencia -->
+                    </div>
+                </div>
+
+                <!-- TARJETA 2: DISTRIBUCIÓN DE SECTORES -->
+                <div class="card-box">
+                    <div class="card-header">
+                        <h3>SECTORES MIRANDA</h3>
+                        <span class="dots">...</span>
+                    </div>
+                    <div class="sector-dots-grid">
+                        <!-- Simulación de cajas en Guarenas / Trapichito / Casarapa -->
+                        <span class="dot-item green" title="Trapichito 01"></span>
+                        <span class="dot-item green" title="Trapichito 02"></span>
+                        <span class="dot-item orange" title="Centro 01"></span>
+                        <span class="dot-item green" title="Casarapa 01"></span>
+                        <span class="dot-item green" title="Casarapa 02"></span>
+                        <span class="dot-item red" title="Mampote 01"></span>
+                    </div>
+                    <div class="legend-footer">
+                        <span><i class="dot green"></i> Óptimo</span>
+                        <span><i class="dot orange"></i> Revisar</span>
+                        <span><i class="dot red"></i> Alarma</span>
+                    </div>
+                </div>
+
+                <!-- TARJETA 3: LÍNEA DE TIEMPO / AUDITORÍAS RECIENTES (Derecha) -->
+                <div class="card-box timeline-card" rowspan="2">
+                    <div class="card-header">
+                        <h3>HISTORIAL DE AUDITORÍAS NAP</h3>
+                        <span class="dots">...</span>
+                    </div>
+                    <div class="timeline-container">
+                        <div class="timeline-row">
+                            <span class="time-tag">10:45</span>
+                            <div class="timeline-bar green-bar">NAP-PLAZA-04 (Puerto 3) - Óptimo (-20.5 dBm)</div>
+                        </div>
+                        <div class="timeline-row">
+                            <span class="time-tag">09:30</span>
+                            <div class="timeline-bar orange-bar">NAP-TRAP-01 (Puerto 12) - Atenuado (-28.1 dBm)</div>
+                        </div>
+                        <div class="timeline-row">
+                            <span class="time-tag">08:15</span>
+                            <div class="timeline-bar green-bar">NAP-CASA-08 (Puerto 1) - Óptimo (-19.2 dBm)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-legend">
+                        <span>● Óptimo</span> <span>● Atenuado</span> <span class="total-text">Total Registros: 284</span>
+                    </div>
+                </div>
+
+                <!-- TARJETA 4: VISUALIZADOR DE PUERTOS SPLITTER (Abajo Izquierda) -->
+                <div class="card-box wide-card">
+                    <div class="card-header">
+                        <h3>SPLITTER 1:16 - CAJA SELECCIONADA</h3>
+                        <select id="select-nap-ui" class="select-dark">
+                            <option>NAP-TRAPICHITO-03</option>
+                            <option>NAP-CENTRO-01</option>
+                        </select>
+                    </div>
+                    <div class="splitter-ports-row">
+                        <!-- Representación visual de los 16 puertos de la NAP -->
+                        <div class="port-pill green-bg"><span>P01</span><small>-19 dBm</small></div>
+                        <div class="port-pill green-bg"><span>P02</span><small>-20 dBm</small></div>
+                        <div class="port-pill orange-bg"><span>P03</span><small>-27 dBm</small></div>
+                        <div class="port-pill gray-bg"><span>P04</span><small>Libre</small></div>
+                        <div class="port-pill green-bg"><span>P05</span><small>-18 dBm</small></div>
+                        <div class="port-pill green-bg"><span>P06</span><small>-21 dBm</small></div>
+                        <div class="port-pill red-bg"><span>P07</span><small>Fail</small></div>
+                        <div class="port-pill green-bg"><span>P08</span><small>-22 dBm</small></div>
+                    </div>
+                    <div class="splitter-status-footer">
+                        <span class="res-count">Recursos: 16 puertos</span>
+                        <span class="val-count">🟢 Activos: 6</span>
+                        <span class="inv-count">🔴 Alertas: 2</span>
+                        <span class="total-count">Capacidad Total: 16</span>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
