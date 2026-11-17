@@ -1,4 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Lógica de Navegación entre Pestañas ---
+    const navLinks = document.querySelectorAll('.nav-link');
+    const viewSections = document.querySelectorAll('.view-section');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Remover la clase active de todos los enlaces y ocultar secciones
+            navLinks.forEach(nav => nav.classList.remove('active'));
+            viewSections.forEach(section => {
+                section.classList.remove('active');
+                section.style.display = 'none';
+            });
+
+            // Activar el enlace presionado
+            link.classList.add('active');
+
+            // Mostrar la sección correspondiente
+            const targetId = link.getAttribute('data-target');
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.classList.add('active');
+            }
+        });
+    });
+
+    // --- Lógica del Formulario de Auditoría NAP ---
     const auditForm = document.getElementById('nap-audit-form');
 
     if (auditForm) {

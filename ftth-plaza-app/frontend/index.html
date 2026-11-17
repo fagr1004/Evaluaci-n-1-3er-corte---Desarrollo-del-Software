@@ -24,89 +24,118 @@
         <aside>
             <nav>
                 <ul>
-                    <li><a href="#" class="active">Dashboard</a></li>
-                    <li><a href="#">Auditoría NAP</a></li>
-                    <li><a href="#">Inventario de Puertos</a></li>
-                    <li><a href="#">Reportes</a></li>
+                    <li><a href="#" class="nav-link active" data-target="dashboard-view">Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-target="audit-view">Auditoría NAP</a></li>
+                    <li><a href="#" class="nav-link" data-target="ports-view">Inventario de Puertos</a></li>
+                    <li><a href="#" class="nav-link" data-target="reports-view">Reportes</a></li>
                 </ul>
             </nav>
         </aside>
 
         <!-- Contenido Principal -->
         <main>
-            <!-- Panel de Estadísticas Rápidas -->
-            <section class="stats-overview">
-                <div class="stat-card">
-                    <h3>Cajas NAP Totales</h3>
-                    <p class="stat-value">48</p>
+            <!-- Vista 1: Dashboard -->
+            <section id="dashboard-view" class="view-section active">
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <h3>Cajas NAP Totales</h3>
+                        <p class="stat-value">48</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Puertos Activos</h3>
+                        <p class="stat-value">312</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Puertos Libres</h3>
+                        <p class="stat-value">72</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Alertas / Incidencias</h3>
+                        <p class="stat-value">3</p>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <h3>Puertos Activos</h3>
-                    <p class="stat-value">312</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Puertos Libres</h3>
-                    <p class="stat-value">72</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Alertas / Incidencias</h3>
-                    <p class="stat-value">3</p>
+                <div class="audit-section">
+                    <h2>Bienvenido al Sistema de Gestión FTTH-GPON</h2>
+                    <p style="color: #64748b; font-size: 0.95rem; line-height: 1.5;">Selecciona una opción en el menú lateral para gestionar las auditorías técnicas de los terminales ópticos en el Municipio Plaza.</p>
                 </div>
             </section>
 
-            <!-- Formulario de Registro / Auditoría de Caja NAP -->
-            <section class="audit-section">
-                <h2>Formulario de Auditoría - Caja NAP</h2>
-                <form id="nap-audit-form">
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nap-code">Código de Caja NAP</label>
-                            <input type="text" id="nap-code" name="nap_code" placeholder="Ej: NAP-PLAZA-042" required>
+            <!-- Vista 2: Auditoría NAP (Formulario) -->
+            <section id="audit-view" class="view-section" style="display: none;">
+                <div class="audit-section">
+                    <h2>Formulario de Auditoría - Caja NAP</h2>
+                    <form id="nap-audit-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nap-code">Código de Caja NAP</label>
+                                <input type="text" id="nap-code" name="nap_code" placeholder="Ej: NAP-PLAZA-042">
+                            </div>
+                            <div class="form-group">
+                                <label for="sector">Sector / Urbanización</label>
+                                <input type="text" id="sector" name="sector" placeholder="Ej: Guarenas - Las Acacias">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="sector">Sector / Urbanización</label>
-                            <input type="text" id="sector" name="sector" placeholder="Ej: Guarenas - Las Acacias" required>
-                        </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="coordinates">Coordenadas GPS</label>
-                            <input type="text" id="coordinates" name="coordinates" placeholder="Ej: 10.4654, -66.6231">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="coordinates">Coordenadas GPS</label>
+                                <input type="text" id="coordinates" name="coordinates" placeholder="Ej: 10.4654, -66.6231">
+                            </div>
+                            <div class="form-group">
+                                <label for="splitter-capacity">Capacidad del Splitter</label>
+                                <select id="splitter-capacity" name="splitter_capacity">
+                                    <option value="8">1:8</option>
+                                    <option value="16" selected>1:16</option>
+                                    <option value="32">1:32</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="splitter-capacity">Capacidad del Splitter</label>
-                            <select id="splitter-capacity" name="splitter_capacity">
-                                <option value="8">1:8</option>
-                                <option value="16" selected>1:16</option>
-                                <option value="32">1:32</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="optical-power">Potencia Óptica (dBm)</label>
-                            <input type="number" step="0.1" id="optical-power" name="optical_power" placeholder="Ej: -21.5">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="optical-power">Potencia Óptica (dBm)</label>
+                                <input type="number" step="0.1" id="optical-power" name="optical_power" placeholder="Ej: -21.5">
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Estado Operativo</label>
+                                <select id="status" name="status">
+                                    <option value="optimal">Óptimo</option>
+                                    <option value="warning">Atenuación Alta / Revisión</option>
+                                    <option value="critical">Crítico / Dañado</option>
+                                </select>
+                            </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="status">Estado Operativo</label>
-                            <select id="status" name="status">
-                                <option value="optimal">Óptimo</option>
-                                <option value="warning">Atenuación Alta / Revisión</option>
-                                <option value="critical">Crítico / Dañado</option>
-                            </select>
+                            <label for="observations">Observaciones Técnicas</label>
+                            <textarea id="observations" name="observations" rows="3" placeholder="Detalles de empalmes, estado de la roseta, precintos..."></textarea>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="observations">Observaciones Técnicas</label>
-                        <textarea id="observations" name="observations" rows="3" placeholder="Detalles de empalmes, estado de la roseta, precintos..."></textarea>
-                    </div>
+                        <button type="submit" class="btn-submit">Guardar Auditoría</button>
+                    </form>
+                </div>
+            </section>
 
-                    <button type="submit" class="btn-submit">Guardar Auditoría</button>
-                </form>
+            <!-- Vista 3: Inventario de Puertos -->
+            <section id="ports-view" class="view-section" style="display: none;">
+                <div class="audit-section">
+                    <h2>Inventario de Puertos y Cajas NAP</h2>
+                    <p style="color: #64748b; margin-bottom: 15px;">Listado general de puertos asignados y disponibles en los distribuidores del Municipio Plaza.</p>
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                        <p><strong>Módulo de inventario en sincronización con el backend...</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vista 4: Reportes -->
+            <section id="reports-view" class="view-section" style="display: none;">
+                <div class="audit-section">
+                    <h2>Reportes Técnicos y Estadísticas</h2>
+                    <p style="color: #64748b; margin-bottom: 15px;">Generación de reportes de atenuación óptica y estado de planta externa.</p>
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                        <p><strong>No hay incidencias críticas reportadas en las últimas 24 horas.</strong></p>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
