@@ -3,127 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTTH-GPON Plaza | Gestión de Cajas NAP</title>
-    <!-- Vinculado a app.css como solicitaste -->
-    <link rel="stylesheet" href="app.css">
+    <title>Gestión y Auditoría NAP - FTTH GPON (Municipio Plaza)</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
-<body class="dark-theme">
+<body>
 
-    <div class="dashboard-container">
+    <!-- Cabecera del Sistema -->
+    <header>
+        <div class="logo">
+            <h1>FTTH-GPON Manager</h1>
+            <span>Auditoría Técnica - Municipio Plaza</span>
+        </div>
+        <div class="user-profile">
+            <span>Técnico Auditor</span>
+        </div>
+    </header>
 
-        <!-- Barra lateral -->
-        <aside class="sidebar-iconos">
-            <div class="logo-box">
-                <span>NP</span>
-            </div>
-            <nav class="icon-nav">
-                <a href="#dashboard" class="icon-btn active" title="Dashboard">📊</a>
-                <a href="#naps" class="icon-btn" title="Cajas NAP">📦</a>
-                <a href="#auditoria" class="icon-btn" title="Auditoría">🔍</a>
-                <a href="#config" class="icon-btn" title="Ajustes">⚙️</a>
+    <div class="app-layout">
+        <!-- Barra Lateral de Navegación -->
+        <aside>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="#">Auditoría NAP</a></li>
+                    <li><a href="#">Inventario de Puertos</a></li>
+                    <li><a href="#">Reportes</a></li>
+                </ul>
             </nav>
-            <div class="sidebar-bottom">
-                <button class="btn-add" title="Nueva Caja NAP">+</button>
-            </div>
         </aside>
 
-        <!-- Contenido principal -->
-        <main class="main-area">
-            
-            <header class="top-nav">
-                <div class="search-section">
-                    <h1>GESTIÓN NAP - MUNICIPIO PLAZA</h1>
+        <!-- Contenido Principal -->
+        <main>
+            <!-- Panel de Estadísticas Rápidas -->
+            <section class="stats-overview">
+                <div class="stat-card">
+                    <h3>Cajas NAP Totales</h3>
+                    <p class="stat-value">48</p>
                 </div>
-                <div class="user-profile">
-                    <span class="badge-status">Conectado (GPON)</span>
-                    <div class="avatar-info">
-                        <span class="user-name">Técnico Auditor</span>
-                        <span class="user-handle">@PlazaAdmin</span>
-                    </div>
+                <div class="stat-card">
+                    <h3>Puertos Activos</h3>
+                    <p class="stat-value">312</p>
                 </div>
-            </header>
+                <div class="stat-card">
+                    <h3>Puertos Libres</h3>
+                    <p class="stat-value">72</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Alertas / Incidencias</h3>
+                    <p class="stat-value">3</p>
+                </div>
+            </section>
 
-            <div class="content-grid">
-
-                <div class="card-box">
-                    <div class="card-header">
-                        <h3>ESTADO DE PUERTOS</h3>
-                        <span class="dots">...</span>
-                    </div>
-                    <div class="metrics-flex">
-                        <div class="metric-item">
-                            <span class="rate red-accent">▲ 92%</span>
-                            <span class="metric-label">Óptimos</span>
+            <!-- Formulario de Registro / Auditoría de Caja NAP -->
+            <section class="audit-section">
+                <h2>Formulario de Auditoría - Caja NAP</h2>
+                <form id="nap-audit-form">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nap-code">Código de Caja NAP</label>
+                            <input type="text" id="nap-code" name="nap_code" placeholder="Ej: NAP-PLAZA-042" required>
                         </div>
-                        <div class="metric-item">
-                            <span class="rate warning">▼ 8%</span>
-                            <span class="metric-label">Atenuados</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-box">
-                    <div class="card-header">
-                        <h3>SECTORES MIRANDA</h3>
-                        <span class="dots">...</span>
-                    </div>
-                    <div class="sector-dots-grid">
-                        <span class="dot-item red-primary" title="Trapichito 01"></span>
-                        <span class="dot-item red-primary" title="Trapichito 02"></span>
-                        <span class="dot-item red-alert" title="Centro 01"></span>
-                        <span class="dot-item red-primary" title="Casarapa 01"></span>
-                        <span class="dot-item red-primary" title="Casarapa 02"></span>
-                        <span class="dot-item red-alert" title="Mampote 01"></span>
-                    </div>
-                    <div class="legend-footer">
-                        <span><i class="dot red-primary"></i> Óptimo</span>
-                        <span><i class="dot orange"></i> Revisar</span>
-                        <span><i class="dot red"></i> Alarma</span>
-                    </div>
-                </div>
-
-                <div class="card-box timeline-card">
-                    <div class="card-header">
-                        <h3>HISTORIAL DE AUDITORÍAS NAP</h3>
-                        <span class="dots">...</span>
-                    </div>
-                    <div class="timeline-container">
-                        <div class="timeline-row">
-                            <span class="time-tag">10:45</span>
-                            <div class="timeline-bar red-bar">NAP-PLAZA-04 (Puerto 3) - Óptimo (-20.5 dBm)</div>
-                        </div>
-                        <div class="timeline-row">
-                            <span class="time-tag">09:30</span>
-                            <div class="timeline-bar orange-bar">NAP-TRAP-01 (Puerto 12) - Atenuado (-28.1 dBm)</div>
+                        <div class="form-group">
+                            <label for="sector">Sector / Urbanización</label>
+                            <input type="text" id="sector" name="sector" placeholder="Ej: Guarenas - Las Acacias" required>
                         </div>
                     </div>
-                    <div class="timeline-legend">
-                        <span>● Óptimo</span> <span>● Atenuado</span> <span class="total-text">Total: 284</span>
-                    </div>
-                </div>
 
-                <div class="card-box wide-card">
-                    <div class="card-header">
-                        <h3>SPLITTER 1:16 - CAJA SELECCIONADA</h3>
-                        <select id="select-nap-ui" class="select-dark">
-                            <option value="NAP-TRAP-01">NAP-TRAPICHITO-01</option>
-                            <option value="NAP-CENTRO-01">NAP-CENTRO-01</option>
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="coordinates">Coordenadas GPS</label>
+                            <input type="text" id="coordinates" name="coordinates" placeholder="Ej: 10.4654, -66.6231">
+                        </div>
+                        <div class="form-group">
+                            <label for="splitter-capacity">Capacidad del Splitter</label>
+                            <select id="splitter-capacity" name="splitter_capacity">
+                                <option value="8">1:8</option>
+                                <option value="16" selected>1:16</option>
+                                <option value="32">1:32</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="splitter-ports-row">
-                        <!-- Puertos dinámicos por JS -->
-                    </div>
-                    <div class="splitter-status-footer">
-                        <span class="res-count">Recursos: 8 puertos</span>
-                        <span class="val-count" style="color: var(--accent-red);">🔴 Activos: Configurados</span>
-                        <span class="total-count">Capacidad GPON: 100%</span>
-                    </div>
-                </div>
 
-            </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="optical-power">Potencia Óptica (dBm)</label>
+                            <input type="number" step="0.1" id="optical-power" name="optical_power" placeholder="Ej: -21.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Estado Operativo</label>
+                            <select id="status" name="status">
+                                <option value="optimal">Óptimo</option>
+                                <option value="warning">Atenuación Alta / Revisión</option>
+                                <option value="critical">Crítico / Dañado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="observations">Observaciones Técnicas</label>
+                        <textarea id="observations" name="observations" rows="3" placeholder="Detalles de empalmes, estado de la roseta, precintos..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Guardar Auditoría</button>
+                </form>
+            </section>
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

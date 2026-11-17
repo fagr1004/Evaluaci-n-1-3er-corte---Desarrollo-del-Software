@@ -1,86 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const cajasNapDatabase = {
-        "NAP-TRAP-01": {
-            codigo: "NAP-TRAP-01",
-            sector: "Trapichito",
-            puertos: [
-                { id: 1, estado: "OPTIMO", abonado: "Carlos Pérez", potencia: -19.5 },
-                { id: 2, estado: "OPTIMO", abonado: "María Rodríguez", potencia: -20.1 },
-                { id: 3, estado: "ATENUADO", abonado: "Juan Gómez", potencia: -27.8 },
-                { id: 4, estado: "LIBRE", abonado: "Sin Asignar", potencia: 0.0 },
-                { id: 5, estado: "OPTIMO", abonado: "Ana Silva", potencia: -18.9 },
-                { id: 6, estado: "OPTIMO", abonado: "Pedro Torres", potencia: -21.2 },
-                { id: 7, estado: "DANADO", abonado: "Fallo Físico", potencia: 0.0 },
-                { id: 8, estado: "OPTIMO", abonado: "Luisa Morales", potencia: -19.8 }
-            ]
-        },
-        "NAP-CENTRO-01": {
-            codigo: "NAP-CENTRO-01",
-            sector: "Centro de Guarenas",
-            puertos: [
-                { id: 1, estado: "OPTIMO", abonado: "Comercio Local A", potencia: -18.2 },
-                { id: 2, estado: "LIBRE", abonado: "Sin Asignar", potencia: 0.0 },
-                { id: 3, estado: "OPTIMO", abonado: "Oficina 3B", potencia: -19.0 },
-                { id: 4, estado: "ATENUADO", abonado: "Residencia Sur", potencia: -28.5 },
-                { id: 5, estado: "LIBRE", abonado: "Sin Asignar", potencia: 0.0 },
-                { id: 6, estado: "LIBRE", abonado: "Sin Asignar", potencia: 0.0 },
-                { id: 7, estado: "OPTIMO", abonado: "Familia Díaz", potencia: -20.4 },
-                { id: 8, estado: "LIBRE", abonado: "Sin Asignar", potencia: 0.0 }
-            ]
-        }
-    };
+    const auditForm = document.getElementById('nap-audit-form');
 
-    const selectNapUI = document.getElementById('select-nap-ui');
-    const splitterContainer = document.querySelector('.splitter-ports-row');
-    const navButtons = document.querySelectorAll('.icon-nav .icon-btn');
+    if (auditForm) {
+        auditForm.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-    function renderizarPuertosNAP(codigoNap) {
-        const napData = cajasNapDatabase[codigoNap];
-        if (!napData || !splitterContainer) return;
+            const napCode = document.getElementById('nap-code').value.trim();
+            const sector = document.getElementById('sector').value.trim();
+            const coordinates = document.getElementById('coordinates').value.trim();
+            const splitterCapacity = document.getElementById('splitter-capacity').value;
+            const opticalPower = parseFloat(document.getElementById('optical-power').value);
+            const status = document.getElementById('status').value;
+            const observations = document.getElementById('observations').value.trim();
 
-        splitterContainer.innerHTML = '';
-
-        napData.puertos.forEach(puerto => {
-            const portDiv = document.createElement('div');
-            portDiv.classList.add('port-pill');
-
-            if (puerto.estado === 'OPTIMO') {
-                portDiv.style.borderColor = 'var(--accent-red)';
-                portDiv.style.backgroundColor = 'var(--accent-red-glow)';
-            } else if (puerto.estado === 'ATENUADO') {
-                portDiv.style.borderColor = 'var(--accent-orange)';
-                portDiv.style.backgroundColor = 'var(--accent-orange-glow)';
-            } else if (puerto.estado === 'DANADO') {
-                portDiv.classList.add('red-border');
-            } else {
-                portDiv.style.borderColor = 'var(--border-card)';
+            if (!napCode || !sector) {
+                alert('Por favor, complete los campos obligatorios (Código de Caja NAP y Sector).');
+                return;
             }
 
-            portDiv.innerHTML = `
-                <span>P${puerto.id.toString().padStart(2, '0')}</span>
-                <small>${puerto.estado === 'LIBRE' ? 'Libre' : puerto.potencia + ' dBm'}</small>
-            `;
+            if (!isNaN(opticalPower)) {
+                if (opticalPower > -10 || opticalPower < -30) {
+                    console.warn('Advertencia: El nivel de potencia óptica ingresado está fuera del rango operativo estándar.');
+                }
+            }
 
-            portDiv.addEventListener('click', () => {
-                alert(`Puerto: P${puerto.id}\nEstado: ${puerto.estado}\nAbonado: ${puerto.abonado}\nPotencia: ${puerto.potencia} dBm`);
-            });
+            const auditData = {
+                codigo_nap: napCode,
+                sector: sector,
+                coordenadas: coordinates,
+                capacidad_splitter: `1:${splitterCapacity}`,
+                potencia_optica_dbm: isNaN(opticalPower) ? null : opticalPower,
+                estado_operativo: status,
+                observaciones: observations,
+                fecha_auditoria: new Date().toISOString()
+            };
 
-            splitterContainer.appendChild(portDiv);
+            console.log('Datos listos para enviar al backend (Python):', JSON.stringify(auditData, null, 2));
+            alert(`¡Auditoría de la caja ${napCode} guardada y enviada con éxito para el Municipio Plaza!`);
+            auditForm.reset();
         });
     }
-
-    if (selectNapUI) {
-        renderizarPuertosNAP(selectNapUI.value || "NAP-TRAP-01");
-        selectNapUI.addEventListener('change', (e) => {
-            renderizarPuertosNAP(e.target.value);
-        });
-    }
-
-    navButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            navButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        });
-    });
 });
