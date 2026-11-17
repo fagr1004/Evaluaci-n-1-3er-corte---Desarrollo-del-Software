@@ -6,18 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-
-            // Remover la clase active de todos los enlaces y ocultar secciones
             navLinks.forEach(nav => nav.classList.remove('active'));
             viewSections.forEach(section => {
                 section.classList.remove('active');
                 section.style.display = 'none';
             });
-
-            // Activar el enlace presionado
             link.classList.add('active');
-
-            // Mostrar la sección correspondiente
             const targetId = link.getAttribute('data-target');
             const targetSection = document.getElementById(targetId);
             if (targetSection) {
@@ -26,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // --- Cargar historial guardado al iniciar ---
+    renderAudits();
 
     // --- Lógica del Formulario de Auditoría NAP ---
     const auditForm = document.getElementById('nap-audit-form');
@@ -47,12 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            if (!isNaN(opticalPower)) {
-                if (opticalPower > -10 || opticalPower < -30) {
-                    console.warn('Advertencia: El nivel de potencia óptica ingresado está fuera del rango operativo estándar.');
-                }
-            }
-
             const auditData = {
                 codigo_nap: napCode,
                 sector: sector,
@@ -60,13 +51,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 capacidad_splitter: `1:${splitterCapacity}`,
                 potencia_optica_dbm: isNaN(opticalPower) ? null : opticalPower,
                 estado_operativo: status,
-                observaciones: observations,
-                fecha_auditoria: new Date().toISOString()
+                observations: observations,
+                fecha_auditoria: new Date().toLocaleString()
             };
 
-            console.log('Datos listos para enviar al backend (Python):', JSON.stringify(auditData, null, 2));
-            alert(`¡Auditoría de la caja ${napCode} guardada y enviada con éxito para el Municipio Plaza!`);
+            // Guardar localmente en el navegador
+            let audits = JSON.parse(localStorage.getItem('nap_audits')) || [];
+            audits.unshift(auditData);
+            localStorage.setItem('nap_audits', JSON.stringify(audits));
+
+            alert(`¡Auditoría de la caja ${napCode} guardada localmente con éxito!`);
             auditForm.reset();
+            
+            // Actualizar vista de reportes
+            renderAudits();
         });
     }
 });
+
+// Función para mostrar las auditorías guardadas en la sección de Reportes
+function renderAudits() {
+    let audits = JSON.parse(localStorage.getItem('nap_audits')) || [];
+    const reportsView = document.getElementById('reports-view');
+    
+    if (reportsView) {
+        let htmlContent = `
+            <h2>Reportes Técnicos y Auditorías Guardadas</h2>
+            <p style="color: #64748b; margin-bottom: 15px;">Listado de cajas NAP auditadas localmente en este navegador:</p>
+            <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; max-height: 300px; overflow-y: auto;">
+        `;
+
+        if (audits.length === 0) {
+            htmlContent += `<p style="color: #94a3b8;">No hay auditorías registradas todavía.</p>`;
+        } else {
+            htmlContent += `<ul style="list-style: none; padding: 0;">`;
+            audits.forEach(audit => {
+                htmlContent += `
+                    <li style="border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
+                        <strong>${audit.codigo_nap}</strong> - ${audit.sector} 
+                        <span style="font-size: 0.8rem; color: #64748b; float: right;">${audit.fecha_auditoria}</span><br>
+                        <small>Potencia: ${audit.potencia_optica_dbm !== null ? audit.potencia_optica_dbm + ' dBm' : 'N/A'} | Estado: <em>${audit.estado_operativo}</em></small>
+                    </li>
+                `;
+            });
+            htmlContent += `</ul>`;
+        }
+        htmlContent += `</div>`;
+        
+        const container = reportsView.querySelector('.audit-section');
+        if (container) {
+            container.innerHTML = htmlContent;
+        }
+    }
+}
