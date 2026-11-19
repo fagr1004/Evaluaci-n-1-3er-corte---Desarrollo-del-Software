@@ -19,7 +19,7 @@ Plataforma web diseñada para el registro, auditoría de conectividad y gestión
 
 ```text
 Evaluaci-n-1-3er-corte---Desarrollo-del-Software/
-├── index.adoc
+├── leeme.txt
 ├── README.md
 └── ftth-plaza-app/
     ├── database.sql          # Script SQL con las tablas y datos iniciales
