@@ -1,4 +1,4 @@
-const API_URL = 'https://evaluaci-n-1-3er-corte-desarrollo-del.onrender.com';[cite: 5]
+const API_URL = 'https://evaluaci-n-1-3er-corte-desarrollo-del.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- Lógica de Navegación entre Pestañas ---
@@ -62,11 +62,21 @@ document.addEventListener('DOMContentLoaded', () => {
             audits.unshift(auditData);
             localStorage.setItem('nap_audits', JSON.stringify(audits));
 
-            // Enviar al backend en Render
-            fetch(`${API_URL}/tu-ruta-de-auditorias`, {
+            // Payload con los nombres exactos que espera /api/auditorias
+            const payload = {
+                nap_id: parseInt(napCode, 10) || 1,
+                tecnico_id: 1,
+                potencia_medida_dbm: isNaN(opticalPower) ? 0 : opticalPower,
+                sellado_hermetico_ok: status === 'Operativo',
+                etiquetado_fibras_ok: true,
+                reserva_cable_ok: true,
+                observaciones: observations || `Sector: ${sector} | Coordenadas: ${coordinates} | Splitter: 1:${splitterCapacity}`
+            };
+
+            fetch(`${API_URL}/api/auditorias`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(auditData)
+                body: JSON.stringify(payload)
             })
             .then(res => {
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
