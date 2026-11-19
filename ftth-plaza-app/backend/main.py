@@ -11,6 +11,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# Permitir peticiones desde el frontend (GitHub Pages o entorno local)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
