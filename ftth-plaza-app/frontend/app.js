@@ -1,3 +1,5 @@
+const API_URL = 'https://evaluaci-n-1-3er-corte-desarrollo-del.onrender.com';[cite: 5]
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Lógica de Navegación entre Pestañas ---
     const navLinks = document.querySelectorAll('.nav-link');
@@ -55,16 +57,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 fecha_auditoria: new Date().toLocaleString()
             };
 
-            // Guardar localmente en el navegador
+            // Guardar localmente en el navegador como respaldo
             let audits = JSON.parse(localStorage.getItem('nap_audits')) || [];
             audits.unshift(auditData);
             localStorage.setItem('nap_audits', JSON.stringify(audits));
 
-            alert(`¡Auditoría de la caja ${napCode} guardada localmente con éxito!`);
-            auditForm.reset();
-            
-            // Actualizar vista de reportes
-            renderAudits();
+            // Enviar al backend en Render
+            fetch(`${API_URL}/tu-ruta-de-auditorias`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(auditData)
+            })
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            })
+            .then(data => {
+                console.log('Guardado en backend:', data);
+                alert(`¡Auditoría de la caja ${napCode} guardada con éxito!`);
+            })
+            .catch(err => {
+                console.error('Error al conectar con el backend:', err);
+                alert(`Auditoría de ${napCode} guardada localmente (no se pudo enviar al servidor).`);
+            })
+            .finally(() => {
+                auditForm.reset();
+                renderAudits();
+            });
         });
     }
 });
@@ -73,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function renderAudits() {
     let audits = JSON.parse(localStorage.getItem('nap_audits')) || [];
     const reportsView = document.getElementById('reports-view');
-    
+
     if (reportsView) {
         let htmlContent = `
             <h2>Reportes Técnicos y Auditorías Guardadas</h2>
@@ -88,7 +107,7 @@ function renderAudits() {
             audits.forEach(audit => {
                 htmlContent += `
                     <li style="border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
-                        <strong>${audit.codigo_nap}</strong> - ${audit.sector} 
+                        <strong>${audit.codigo_nap}</strong> - ${audit.sector}
                         <span style="font-size: 0.8rem; color: #64748b; float: right;">${audit.fecha_auditoria}</span><br>
                         <small>Potencia: ${audit.potencia_optica_dbm !== null ? audit.potencia_optica_dbm + ' dBm' : 'N/A'} | Estado: <em>${audit.estado_operativo}</em></small>
                     </li>
@@ -97,7 +116,7 @@ function renderAudits() {
             htmlContent += `</ul>`;
         }
         htmlContent += `</div>`;
-        
+
         const container = reportsView.querySelector('.audit-section');
         if (container) {
             container.innerHTML = htmlContent;
