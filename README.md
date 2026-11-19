@@ -29,3 +29,5 @@ Evaluaci-n-1-3er-corte---Desarrollo-del-Software/
     │   └── requirements.txt  # Dependencias de Python
     └── frontend/             # Interfaz gráfica de usuario
         └── index.html        # Página principal y conexión con la API	
+        ├── styles.css        # Hoja de estilos y diseño responsivo
+        └── app.js            # Lógica del cliente y conexión con la API
