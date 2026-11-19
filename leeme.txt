@@ -1,0 +1,243 @@
+================================================================================
+
+PLATAFORMA DIGITAL PARA LA GESTIÓN TÉCNICA Y AUDITORÍA DE CAJAS DE ACCESO
+
+TERMINAL (NAP) — FTTH-GPON
+
+================================================================================
+
+
+
+Ubicación del Proyecto : Municipio Plaza, Estado Miranda.
+
+Asignatura             : Desarrollo del Software — Evaluación 1 (3er Corte).
+
+
+
+--------------------------------------------------------------------------------
+
+1. DESCRIPCIÓN DEL SISTEMA
+
+--------------------------------------------------------------------------------
+
+Aplicación web diseñada para el registro, auditoría de conectividad y gestión
+
+técnica de infraestructura de red FTTH-GPON (cajas NAP, puertos, sectores y
+
+estados operativos).
+
+
+
+- Frontend      : HTML5, CSS3, JavaScript.
+
+- Backend       : Python 3.11+, FastAPI, Uvicorn.
+
+- Base de Datos : MySQL / MariaDB (PLATAFORMA_GESTION) gestionada mediante XAMPP.
+
+
+
+--------------------------------------------------------------------------------
+
+2. ESTRUCTURA DEL REPOSITORIO
+
+--------------------------------------------------------------------------------
+
+Evaluaci-n-1-3er-corte---Desarrollo-del-Software/
+
+├── leeme.txt
+
+├── README.md
+
+└── ftth-plaza-app/
+
+    ├── database.sql          (Script SQL con las tablas y datos iniciales)
+
+    ├── backend/              (API REST en FastAPI)
+
+    │   ├── main.py           (Endpoints y lógica del servidor)
+
+    │   ├── database.py       (Configuración de conexión a MySQL / XAMPP)
+
+    │   └── requirements.txt  (Dependencias de Python)
+
+    └── frontend/             (Interfaz gráfica de usuario)
+
+        └── index.html        (Página principal y conexión con la API)
+
+
+
+--------------------------------------------------------------------------------
+
+3. GUÍA PASO A PASO PARA EJECUTAR Y CONECTAR EL SISTEMA
+
+--------------------------------------------------------------------------------
+
+
+
+PASO 1: Descargar el repositorio y visualizar el Frontend
+
+  1. Descargue el proyecto haciendo clic en el botón verde "<> Code" ->
+
+     "Download ZIP" en GitHub (o ejecute en terminal:
+
+     git clone https://github.com/Jose2772/Evaluaci-n-1-3er-corte---Desarrollo-del-Software.git).
+
+  2. Ingrese a la carpeta "ftth-plaza-app/frontend/" y abra el archivo
+
+     "index.html" en su navegador web (o ábralo con Live Server / ejecutando
+
+     "python -m http.server 5500" y entrando a http://127.0.0.1:5500).
+
+  3. En este punto podrá explorar toda la interfaz visual de la plataforma.
+
+     Para activar el inicio de sesión, las consultas y el guardado real de
+
+     datos, continúe con los Pasos 2 y 3 para montar y conectar la base de
+
+     datos en XAMPP.
+
+
+
+PASO 2: Montar la Base de Datos en XAMPP (phpMyAdmin)
+
+  1. Abra el panel de control de XAMPP (XAMPP Control Panel).
+
+  2. Haga clic en el botón "Start" del módulo Apache y en el botón "Start" del
+
+     módulo MySQL (ambos deben iluminarse en verde y mostrar su puerto asignado,
+
+     por defecto 3306 para MySQL).
+
+  3. Haga clic en el botón "Admin" ubicado al lado de MySQL (esto abrirá
+
+     automáticamente http://localhost/phpmyadmin en su navegador).
+
+  4. En el panel izquierdo de phpMyAdmin, haga clic en "Nueva" (New).
+
+  5. En el campo "Nombre de la base de datos", escriba exactamente:
+
+       PLATAFORMA_GESTION
+
+     y haga clic en el botón "Crear".
+
+  6. Con la base de datos PLATAFORMA_GESTION seleccionada en el menú izquierdo,
+
+     haga clic en la pestaña superior "Importar" (Import).
+
+  7. Presione "Seleccionar archivo" (Choose File), busque y seleccione el
+
+     archivo "database.sql" ubicado en "ftth-plaza-app/database.sql".
+
+  8. Baje hasta el final de la página y haga clic en el botón "Importar" (Go).
+
+  9. Verificación: En el panel izquierdo aparecerán creadas todas las tablas
+
+     de PLATAFORMA_GESTION junto con los registros iniciales de prueba.
+
+
+
+PASO 3: Conectar el Backend (FastAPI) con la Base de Datos de XAMPP
+
+  * Requisito previo: Tener instalado Python 3.11 o 3.12 y mantener encendido
+
+    el módulo MySQL en XAMPP.
+
+
+
+  1. Abra una terminal y ubíquese en la carpeta del servidor backend:
+
+       cd ftth-plaza-app/backend
+
+
+
+  2. Cree y active el entorno virtual de Python e instale las dependencias:
+
+     - En Windows:
+
+         python -m venv .venv
+
+         .venv\Scripts\activate
+
+         pip install -r requirements.txt
+
+
+
+     - En Linux / macOS:
+
+         python3 -m venv .venv
+
+         source .venv/bin/activate
+
+         pip install -r requirements.txt
+
+
+
+  3. Para enlazar el backend con el servidor MySQL de XAMPP, cree un archivo
+
+     llamado ".env" dentro de la carpeta "ftth-plaza-app/backend/" con los
+
+     parámetros de conexión por defecto de XAMPP (usuario root sin contraseña):
+
+       DB_HOST=127.0.0.1
+
+       DB_PORT=3306
+
+       DB_USER=root
+
+       DB_PASSWORD=
+
+       DB_NAME=PLATAFORMA_GESTION
+
+     (Nota: Si en su instalación local de XAMPP cambió el puerto de MySQL o
+
+     asignó una contraseña al usuario root, colóquelos en DB_PORT y DB_PASSWORD).
+
+
+
+  4. Inicie el servidor backend de FastAPI:
+
+       uvicorn main:app --reload
+
+     Al iniciar correctamente, la consola mostrará:
+
+       Uvicorn running on http://127.0.0.1:8000
+
+
+
+  5. Verificación de conexión:
+
+     - Al abrir http://127.0.0.1:8000 en el navegador, la API responderá con
+
+       el estado operativo del servicio.
+
+     - Al abrir http://127.0.0.1:8000/docs se desplegará la documentación
+
+       interactiva (Swagger UI) conectada a PLATAFORMA_GESTION.
+
+
+
+  6. Regrese a la pestaña del Frontend en su navegador y recargue con F5. El
+
+     sistema quedará completamente conectado a la base de datos de XAMPP para
+
+     registrar, consultar y auditar cajas NAP.
+
+
+
+--------------------------------------------------------------------------------
+
+4. INTEGRANTES DEL EQUIPO
+
+--------------------------------------------------------------------------------
+
+- José Gerardo 
+
+- Fabián García
+
+- Isabella Serrano
+
+- Luis Marín
+
+- Daymar Escalona
+
+================================================================================
